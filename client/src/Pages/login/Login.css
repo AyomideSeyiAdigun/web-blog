@@ -1,0 +1,56 @@
+.login{
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    background: linear-gradient(
+        rgba(255,255,255,0.5),
+        rgba(255,255,255,0.5)
+    );
+    background:  url("https://pngimg.com/uploads/postcard/postcard_PNG100.png ");
+    background-size: cover;
+}
+
+.login__Title{
+    font-size: 50px;
+
+}
+
+.login__Form{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column ;
+}
+
+.login__Form > label{
+    margin: 10px 0;
+}
+
+.login__Form > Input{
+    padding: 10px;
+    background-color: white;
+    border: none;
+}
+
+.login__Button{
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: lightcoral;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.login__RegisterButton{
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: teal;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+}
