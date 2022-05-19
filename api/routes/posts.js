@@ -5,9 +5,10 @@ const jwt = require('jsonwebtoken');
 
 
 function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers['authorization']  ;
   let token = authHeader && authHeader.split(' ')[1]
-  token = token.slice(0, -1);
+ 
+//   token = token.slice(0, -1);
   if (token == null) return res.status(401).json('You can only edit your account')
  
   jwt.verify(token, process.env.SECRET, (err, user) => {
@@ -23,6 +24,7 @@ function authenticateToken(req, res, next) {
 router.post('/', authenticateToken, async (req,res)=>{
         const newPost = await new Post(req.body);
     try{
+        console.log(req)
         const savedPost  = await newPost.save();
         res.status(200).json(savedPost);
     }catch(err){
@@ -36,8 +38,6 @@ router.post('/', authenticateToken, async (req,res)=>{
 router.put('/:id', authenticateToken, async (req,res)=>{  
     try{
         const post = await Post.findById(req.params.id);
-        if(post.username === req.body.username){
-
             try {
                 const updatedPost = await Post.findByIdAndUpdate(req.params.id,{
                     $set:req.body
@@ -47,10 +47,6 @@ router.put('/:id', authenticateToken, async (req,res)=>{
             } catch (error) {
                 res.status(401).json('you can only update your post')
             }
-         
-        }else{
-            res.status(401).json('you can only update your post')
-        }
     }catch(err){
         res.status(500).json(err);
     }
@@ -62,8 +58,7 @@ router.put('/:id', authenticateToken, async (req,res)=>{
 router.delete('/:id', authenticateToken, async (req,res)=>{
     try{
         const post = await Post.findById(req.params.id);
-        if(post.username === req.body.username){
-
+        console.log(post)
             try {
               await post.delete();
                 res.status(200).json("post has been deleted");
@@ -71,9 +66,6 @@ router.delete('/:id', authenticateToken, async (req,res)=>{
                 res.status(401).json('you can only delete your post')
             }
          
-        }else{
-            res.status(401).json('you can only delete your post')
-        }
     }catch(err){
         res.status(500).json(err);
     }

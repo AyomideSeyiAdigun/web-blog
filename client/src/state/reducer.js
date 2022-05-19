@@ -1,7 +1,4 @@
-export const initialState={
-    posts:[],
-    user:null
-};
+
 //selector
 
 
@@ -11,30 +8,48 @@ const reducer = (state,action) =>{
             return{
                 posts:action.item,
             }
-        case 'EMPTY_BASKET':
+        case 'LOGIN-START':
             return{
-                ...state,
-                basket:[]
+                user:null,
+                isFecthing:true,
+                error:false
             }
-        case 'REMOVE_FROM_BASKET':
-            const index = state.basket.findIndex(
-                (basketItem)=>basketItem.id === action.id
-            );
-            let newBasket = [...state.basket];
-            if(index >= 0){
-                newBasket.splice(index,1);
-            }else{
-                console.warn(`cant remove product (id: ${action.id})as it is not in the basket!`)
-            }
+        case 'LOGIN_SUCCESS':
             return{
-                ...state,
-                basket:newBasket
+                user:action.payload,
+                isFecthing:false,
+                error:false
             }
-        case 'SET_USER':
+        case 'LOGIN_FAILURE' :
             return{
-                ...state,
-                user:action.user
+                user:null,
+                isFecthing:false,
+                error:true
             }
+            case 'UPDATE_START':
+                return{
+                    ...state,
+                    isFecthing:true,
+                    error:false
+                }
+            case 'UPDATE_SUCCESS':
+                return{
+                    user:action.payload,
+                    isFecthing:false,
+                    error:false
+                }
+            case 'UPDATE_FAILURE' :
+                return{
+                    user:state.user,
+                    isFecthing:false,
+                    error:true
+                }
+         case 'LOGOUT':
+            return{
+                user:null,
+                isFecthing:false,
+                error:false
+                }
         default:
             return state;
     };

@@ -45,7 +45,8 @@ router.post('/login',async (req,res)=>{
 
         const {password,...others}=user._doc
         const token =await generateAccessToken(others);
-        res.status(200).json(`Bearer ${token}`)
+        const myUser = {token:`Bearer ${token}`,user:others}
+        res.status(200).json(myUser)
 
     }catch(err){
         res.status(500).json(err);

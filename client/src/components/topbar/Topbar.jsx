@@ -1,8 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useStateValue } from '../../state/stateProvider';
 import './Topbar.css'
 function Topbar() {
-    const user = false
+    const [ {},dispatch]=useStateValue();
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const PF = "http://localhost:5000/images/"
+    const handleLogout = () => {
+        dispatch({type:"LOGOUT"});
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user')
+        window.location.replace('/login');
+    }   
     return (
         <div className='topbar'>
              <div className='topbar__Left'>
@@ -17,14 +26,14 @@ function Topbar() {
                     <li><Link className='link' to='/about'>ABOUT</Link></li>
                     <li><Link className='link' to='/contact'>CONTACT</Link></li>
                     <li><Link className='link' to='/write'>WRITE</Link></li>
-                    <li><Link className='link' to='/logout'>{user && 'LOGOUT'}</Link></li>
+                    <li onClick={handleLogout}> {user && 'LOGOUT'}</li>
                 </ul>
              </div>
              <div className='topbar__Right'>
                  {
-                     user ? (
-                         <img src="https://pngimg.com/uploads/cobra/cobra_PNG27.png" alt="" />
-                     ) :
+                     user ? ( 
+                       <Link className="link" to="/settings">  <img className="topbar__RightImg" src={PF+user.profilePic} alt="p.pic" /> </Link>
+                     ):
                      (
                          <ul className="topbar__List">
                                 <li> <Link className='link' to='/login'>LOGIN</Link></li>

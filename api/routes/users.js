@@ -2,12 +2,12 @@ const router  = require("express").Router();
 const User = require('../models/Users');
 const Post = require('../models/Posts');
 const jwt = require('jsonwebtoken');
- 
+const bcrypt = require('bcrypt');
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   let token = authHeader && authHeader.split(' ')[1]
-  token = token.slice(0, -1);
+ 
   if (token == null) return res.status(401).json('You can only edit your account')
  
   jwt.verify(token, process.env.SECRET, (err, user) => {
@@ -25,6 +25,7 @@ function authenticateToken(req, res, next) {
 
 //UPDATE
 router.put('/:id', authenticateToken, async (req,res)=>{
+    console.log('hi')
     if(req.body.password){
         const salt = await bcrypt.genSalt(10);
        req.body.password = await bcrypt.hash(req.body.password,salt)

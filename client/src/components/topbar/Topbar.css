@@ -17,14 +17,16 @@
     flex: 3;
 }
 
-.topbar__Right > img {
+ 
+.topbar__RightImg{
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
 }
 
-.topbar__Right > i {
+.topbar__Right  >i {
     font-size: 18px;
     color:#666;
     cursor: pointer;

@@ -5,6 +5,8 @@ const PORT = 5000;
 const mongoose = require('mongoose');
 var cors = require('cors');
 app.use(cors());
+const path = require('path');
+
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -39,6 +41,7 @@ mongoose.connect(process.env.URL2).then(console.log('connected to mongoDB'))
 app.get('/',(req,res)=>{ 
     res.send('hello world!')
 })
+app.use('/images',express.static(path.join(__dirname,"/images")))
 app.use('/api/auth',authRoute);
 app.use('/api/users',usersRoute);
 app.use('/api/posts',postsRoute);

@@ -7,7 +7,7 @@ const Category = require("../models/Category");
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   let token = authHeader && authHeader.split(' ')[1]
-  token = token.slice(0, -1);
+  
   if (token == null) return res.status(401).json('You can only edit your account')
  
   jwt.verify(token, process.env.SECRET, (err, user) => {
